@@ -23,7 +23,7 @@ const SearchList = (props) => {
           <Form.Check type="checkbox" label="Only show products in stock" onChange={handleCheckboxChange} />
         </Form.Group>
       </Form>
-        )
+         )
 }
 
 export default SearchList

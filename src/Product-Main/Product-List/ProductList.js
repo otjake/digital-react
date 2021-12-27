@@ -5,16 +5,15 @@ import ProductItems from "./Product-Items/ProductItems";
 const ProductList = (props) => {
     console.log("Products", props.products);
     if(props.products.length == 0){
-        return <p>if spelling is correct,Product does not exist</p>
+        return <p>if spelling is correct,Product does not exist or is out of stock</p>
     }
     let categories = []
     
-    let fetchDistinctCategories = props.products.map(expense =>
+    props.products.map(expense =>
         (!categories.includes(expense.category) && categories.push(expense.category))
     )
-    console.log("Categories", categories);
 
-    let extractor = (categoryName) => {
+    let collectProductsWithSameCategory = (categoryName) => {
         return props.products.filter(product => product.category == categoryName)
     }
 
@@ -29,12 +28,12 @@ const ProductList = (props) => {
                 </tr>
             </thead>
             {
-                categories.map(category =>
-                    <tbody key={category}>
+                categories.map(categoryName =>
+                    <tbody key={categoryName}>
                         <tr>
-                            <td>{category}</td>
+                            <td>{categoryName}</td>
                         </tr>
-                      <ProductItems items={extractor(category)} />
+                      <ProductItems items={collectProductsWithSameCategory(categoryName)} />
                     </tbody>
                 )
             }
