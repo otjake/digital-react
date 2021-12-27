@@ -4,7 +4,7 @@ import ProductItems from "./Product-Items/ProductItems";
 
 const ProductList = (props) => {
     console.log("Products", props.products);
-    if(props.products.length == 0){
+    if(props.products.length === 0){
         return <p>if spelling is correct,Product does not exist or is out of stock</p>
     }
     let categories = []
@@ -14,7 +14,7 @@ const ProductList = (props) => {
     )
 
     let collectProductsWithSameCategory = (categoryName) => {
-        return props.products.filter(product => product.category == categoryName)
+        return props.products.filter(product => product.category === categoryName)
     }
 
     return (
