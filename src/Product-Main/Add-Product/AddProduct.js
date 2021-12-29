@@ -1,11 +1,11 @@
-import React,{useState} from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 
 const AddProduct = (props) => {
-    const [category,setCategory] = useState('')
-    const [name,setName] = useState('')
-    const [price,setPrice] = useState(0)
-    const [stocked,setstocked] = useState('checked')
+    const [category, setCategory] = useState('')
+    const [name, setName] = useState('')
+    const [price, setPrice] = useState(0)
+    const [stocked, setstocked] = useState('checked')
 
 
     const handleCategoryNameChange = (e) => {
@@ -29,22 +29,27 @@ const AddProduct = (props) => {
 
     const gatherFormData = (e) => {
         e.preventDefault();
-  
-        const formData ={
-            category : category,
-            name : name,
-            price : "$" + price,
-            stocked : stocked
+
+        const formData = {
+            category: category,
+            name: name,
+            price: "$" + price,
+            stocked: stocked
         }
 
         props.collectFormData(formData)
-        
-            setCategory('')
-            setName('')
-            setPrice(0)
-            setstocked(false)
-    }
 
+
+    }
+    console.log("checking from add product", props.checking)
+    useEffect(() => {
+        if(props.success){
+        setCategory('')
+        setName('')
+        setPrice(0)
+        setstocked(false)
+        }
+    }, [props.success])
 
     return (
         <Form onSubmit={gatherFormData}>

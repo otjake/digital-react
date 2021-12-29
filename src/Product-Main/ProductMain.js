@@ -7,6 +7,9 @@ const ProductMain = (props) => {
   const [products,setProducts] = useState(props.products)
   const [filteredString, setFilteredString] = useState('');//set a default state for search input
   const [checkboxValue, setcheckboxValue] = useState(false);//set a default state for checkbux
+  const [success, setSuccess] = useState(false);//set a default state for checkbux
+
+
 
 
   const searchInputChangeHandler = searchInput => {
@@ -31,6 +34,9 @@ const ProductMain = (props) => {
   })
 
   //applying checkbox filter
+  //i am used the results of the searchingproducts and filter through then use as the final products
+  //if the checkbox is false return all products
+  //if it is true return products in stock
   let productsInStock = searchingProducts.filter(product => {
     if (checkboxValue === false) {
       return searchingProducts;
@@ -40,10 +46,20 @@ const ProductMain = (props) => {
   })
 
   let addProducts = (formData) => {
-    formData.id = 90;
+    let lastArrayId = products.at(-1).id
+    formData.id = +lastArrayId + 1; //+ behind the lastArrayId makes casts it as an integer
+    
     setProducts((prevProducts)=>{
-      console.log('added',[formData,...prevProducts])
-      return([formData,...prevProducts]);
+      let previviousLength=prevProducts.length
+      let totalProducts = [...prevProducts,formData]
+      if(totalProducts.length > previviousLength){
+        console.log('checker1',success)
+        setSuccess(true)
+        return(totalProducts);
+      }else{
+        setSuccess(false)
+        return;
+      }
     })
   }
 
@@ -67,7 +83,8 @@ const ProductMain = (props) => {
             <Card.Header>Add a new product</Card.Header>
             <Card.Body>
               <AddProduct
-              collectFormData={addProducts} />
+              collectFormData={addProducts}
+              success = {success}/>
             </Card.Body>
           </Card> :
           ''
